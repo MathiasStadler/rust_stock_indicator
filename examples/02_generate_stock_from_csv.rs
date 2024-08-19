@@ -18,7 +18,7 @@ use ta::Next;
 
 
 
-const CSV_STOCK_INPUT: &str = "stock_data/stock_trex_data.csv";
+
 
 
 #[derive(Debug)]
@@ -59,13 +59,15 @@ fn generate_utc_date_from_date_string(date_string: &str) -> DateTime<Utc> {
     Utc.from_utc_datetime(&day_one)
 }
 
-#[allow(dead_code)]
+
+const CSV_STOCK_INPUT: &str = "stock_data/stock_trex_data.csv";
+
 fn generate_stock_data_from_csv(date_string: &str) -> StockData {
     let mut sma = Sma::new(7).unwrap();
     let mut reader = csv::Reader::from_path(CSV_STOCK_INPUT).unwrap();
 
     for record in reader.deserialize() {
-        let (date, open, high, low, close, volume): (String, f64, f64, f64, f64, f64) =
+        let (date_string, open, high, low, close, volume): (String, f64, f64, f64, f64, f64) =
             record.unwrap();
 
         let dt = DataItem::builder()
@@ -77,11 +79,19 @@ fn generate_stock_data_from_csv(date_string: &str) -> StockData {
             .build()
             .unwrap();
 
+            StockData::new(
+                generate_utc_date_from_date_string(date),
+                high,
+                low,
+                open,
+                close,
+            );
+
         let sma_val = sma.next(&dt);
         // println!("{}: {} = {:2.2}", date, sma, sma_val);
         println!(
             " {:?}, {:?}, {:?}, {:?},{:?}, {:?}, {:2.2}",
-            date, open, high, low, close, volume, sma_val
+            date_string, open, high, low, close, volume, sma_val
         );
         // println!("{}: {} = {:2.2}", date, sma, sma_val);
     }
@@ -90,28 +100,22 @@ fn generate_stock_data_from_csv(date_string: &str) -> StockData {
     let base_stock_data_series: Vec<(f64, f64, f64, f64)> = vec![];
     let base_data_series_len = base_stock_data_series.len();
 
-    let mut rng = rand::thread_rng();
+    // let mut rng = rand::thread_rng();
 
-    let high = Decimal::from_f64(base_stock_data_series[rng.gen_range(0..base_data_series_len)].1)
-        .unwrap()
-        .round_dp(2);
-    let low = Decimal::from_f64(base_stock_data_series[rng.gen_range(0..base_data_series_len)].2)
-        .unwrap()
-        .round_dp(2);
-    let open = Decimal::from_f64(base_stock_data_series[rng.gen_range(0..base_data_series_len)].0)
-        .unwrap()
-        .round_dp(2);
-    let close = Decimal::from_f64(base_stock_data_series[rng.gen_range(0..base_data_series_len)].3)
-        .unwrap()
-        .round_dp(2);
+    // let high = Decimal::from_f64(base_stock_data_series[0..base_data_series_len].1)
+    //     .unwrap()
+    //     .round_dp(2);
+    // let low = Decimal::from_f64(base_stock_data_series[0..base_data_series_len].2)
+    //     .unwrap()
+    //     .round_dp(2);
+    // let open = Decimal::from_f64(base_stock_data_series[0..base_data_series_len].0)
+    //     .unwrap()
+    //     .round_dp(2);
+    // let close = Decimal::from_f64(base_stock_data_series[0..base_data_series_len].3)
+    //     .unwrap()
+    //     .round_dp(2);
 
-    StockData::new(
-        generate_utc_date_from_date_string(date_string),
-        high,
-        low,
-        open,
-        close,
-    )
+    
 }
 
 #[test]
@@ -120,3 +124,15 @@ fn test_generate_stock_data_from_csv() {
 
     generate_stock_data_from_csv(&stock_date);
 }
+
+
+fn main(){
+
+    println!("Hello main");
+}
+
+
+// cargo test--package rust_stock_indicator --example 02_generate_stock_from_csv -- test_generate_stock_data_from_csv --exact --show-output
+
+// RUST_BACKTRACE=full cargo test --package rust_stock_indicator --example 02_generate_stock_from_csv -- test_generate_stock_data_from_csv --exact --show-output
+
