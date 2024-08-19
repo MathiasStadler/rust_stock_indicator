@@ -43,6 +43,7 @@ touch README.md \
 && rustup update  --force \
 && rustup show \
 && cargo add rustfmt \
+&& cargo add cargo-edit \
 && rustup component add rustfmt \
 && rustup show \
 && touch FROM_HERE.md \
@@ -73,6 +74,11 @@ cargo add rand
 cargo add rust_decimal
 cargo add rust_decimal_macros
 cargo add ta
+cargo add csv
+# FROM HERE
+# https://users.rust-lang.org/t/how-to-update-dependencies-to-the-latest/110232/2
+# cargo upgrade -i allow --verbose
+cargo update --verbose
 cargo build
 ```
 
@@ -88,6 +94,7 @@ cargo install cargo-watch
 sudo apt update
 sudo apt upgrade --Yes 
 sudo apt install --Yes pkg-config libfreetype6-dev libfontconfig1-dev
+sudo apt-get install libssl-dev
 ```
 
 ## add stock data in folder
@@ -98,6 +105,7 @@ mkdir stock_data
 # inside a browser
 # https://stooq.com/q/d/l/?s=TREX.US&i=d&d1=19900101&d2=20241231
 # curl --output stock_trex_data.csv https://stooq.com/q/d/l/?s=TREX.US&i=d&d1=19900101&d2=20241231
+curl --output stock_data/stock_trex_data.csv https://stooq.com/q/d/l/?s=TREX.US&i=d&d1=19900101&d2=20241231
 
 ```
 

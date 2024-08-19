@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
+        "libfontconfig",
+        "libfreetype",
         "rustfmt"
     ]
 }
