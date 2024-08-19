@@ -1624,7 +1624,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rust_stock"
+name = "rust_stock_indicator"
 version = "0.1.0"
 dependencies = [
  "cargo-edit",
@@ -1637,6 +1637,8 @@ dependencies = [
  "rust_decimal",
  "rust_decimal_macros",
  "rustfmt",
+ "serde",
+ "serde_json",
  "ta",
 ]
 

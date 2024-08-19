@@ -1,7 +1,9 @@
 {
     "cSpell.words": [
+        "datetime",
         "libfontconfig",
         "libfreetype",
-        "rustfmt"
+        "rustfmt",
+        "serde"
     ]
 }

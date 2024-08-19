@@ -75,6 +75,8 @@ cargo add rust_decimal
 cargo add rust_decimal_macros
 cargo add ta
 cargo add csv
+cargo add rust_decimal
+cargo add serde
 # FROM HERE
 # https://users.rust-lang.org/t/how-to-update-dependencies-to-the-latest/110232/2
 # cargo upgrade -i allow --verbose
